@@ -8,6 +8,7 @@ import com.tracking_system.repository.RootRepo;
 import com.tracking_system.service.RootService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -18,52 +19,63 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/trackingsystem/root")
-public class RootResource {
+public class RootResource{
 
     @Autowired
     private RootRepo rootRepo;
 
-    @Autowired
-    private RootService rootService;
-
-    //Get All Root By Page
+    //Get All Roots By Page
     @GetMapping("/all")
-    public List<Root> getAllRoot(@RequestParam("page") int page) {
-        return rootService.getAllRoot(page);
+    public List<Root> getAllRoot() {
+        return rootRepo.findAll();
     }
 
-    //Creating Root
-    @PostMapping(value = "/createRoot")
+    //Creating Roots
+    @PostMapping(value = "/create")
     public ResponseEntity createRoot(@Valid @RequestBody final RootDetails rootDetails){
 
         if(rootRepo.existsByRootId(rootDetails.getRootId())) {
 
-            return new ResponseEntity(new ApiResponse(false, "Bus No is already taken!"),
+            return new ResponseEntity(new ApiResponse(false, "Root Id is already taken!"),
                     HttpStatus.BAD_REQUEST);
         }
 
-        Root root = new Root(rootDetails.getRootId(),rootDetails.getRootFrom(),rootDetails.getRootTo(),
-                             rootDetails.getRootinstitutionId());
+        Root root = new Root(rootDetails.getRootId(),rootDetails.getRootFrom(),rootDetails.getRootTo(),rootDetails.getRootinstitutionId(),
+                             /*rootDetails.getFromLatitude(),rootDetails.getFromLongitude(),rootDetails.getToLatiutde(),rootDetails.getToLongitude(),*/
+                             rootDetails.getBusno(),rootDetails.getDriverLicenseNo(),rootDetails.getDriverName(),rootDetails.getDriverPhoneNo());
         Root result = rootRepo.save(root);
 
         URI location = ServletUriComponentsBuilder
-                .fromCurrentContextPath().path("/getRootFrom/{rootfrom}")
+                .fromCurrentContextPath().path("")
                 .buildAndExpand(result.getRootId()).toUri();
 
         return ResponseEntity.created(location).body(new ApiResponse(true, " successfully"));
     }
 
-    //Updating Root
-    @PutMapping(value = "/update/{rootid}")
-    public Root updateByRootId(@PathVariable (value = "rootid") Integer rootid, @RequestBody Root root){
-        rootRepo.findById(rootid);
-        return rootRepo.save(root);
+    //Updating Roots
+    @PutMapping(value = "/update/{rootId}")
+    public ResponseEntity updateRootId(@PathVariable (value = "rootId") Integer rootId, @RequestBody Root root){
+        if(rootRepo.existsByRootId(root.getRootId())){
+            rootRepo.findById(rootId);
+            rootRepo.save(root);
+            return ResponseEntity.ok(HttpStatus.OK);
+        }else {
+            return new ResponseEntity(new ApiResponse(false, "User is not available!"),
+                    HttpStatus.BAD_REQUEST);
+        }
     }
 
-    //Deleting Root
-    @DeleteMapping(value = "/delete/{rootid}")
-    public ResponseEntity deleteByRootId(@PathVariable("rootid") Integer rootid, @RequestBody Root root) {
-        rootRepo.delete(root);
-        return ResponseEntity.noContent().build();
+    //Deleting Roots
+    @DeleteMapping(value = "/delete/{rootId}")
+    public ResponseEntity deleteRootId(@PathVariable("rootId") Integer rootId, @RequestBody Root root) {
+       if(rootRepo.existsByRootId(root.getRootId())) {
+           rootRepo.delete(root);
+           return ResponseEntity.ok(HttpStatus.OK);
+       }
+       else{
+           return new ResponseEntity(new ApiResponse(false, "Root is not available!"),
+                   HttpStatus.BAD_REQUEST);
+
+       }
     }
 }

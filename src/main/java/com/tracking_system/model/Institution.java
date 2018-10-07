@@ -1,6 +1,5 @@
 package com.tracking_system.model;
 
-import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -8,7 +7,7 @@ import java.util.Set;
 
 
 @Entity
-@Table(name = "institution")
+@Table(name = "institutions")
 public class Institution extends Audit{
 
     @Id
@@ -22,7 +21,7 @@ public class Institution extends Audit{
     @Column(name = "enable")
     private Boolean enableInstitution;
 
-    public Institution() { }
+    public Institution() {}
 
     public Institution(Integer institutionId, String institutionName, String institutionAddress, Boolean enableInstitution) {
         this.institutionId = institutionId;
@@ -74,6 +73,5 @@ public class Institution extends Audit{
     public void setEnableInstitution(Boolean enableInstitution) {
         this.enableInstitution = enableInstitution;
     }
-
 
 }

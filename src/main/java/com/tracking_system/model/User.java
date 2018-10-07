@@ -36,7 +36,7 @@ public class User {
     @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinTable(name = "user_institution",
             joinColumns = {@JoinColumn(name = "phone_no")},
-            inverseJoinColumns = {@JoinColumn(name = "institute_id")})
+            inverseJoinColumns = {@JoinColumn(name = "institution_id")})
     private Set<Institution> institutions = new HashSet<>();
 
     public Set<Institution> getInstitutions() {

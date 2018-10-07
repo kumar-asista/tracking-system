@@ -77,7 +77,7 @@ public class UserResource {
         if (userRepo.existsByPhoneNo(user.getPhoneNo())) {
             userRepo.findById(phoneNo);
             userRepo.save(user);
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok(HttpStatus.OK);
         } else {
             return new ResponseEntity(new ApiResponse(false, "User is not available!"),
                     HttpStatus.BAD_REQUEST);
@@ -88,13 +88,13 @@ public class UserResource {
     @DeleteMapping(value = "/delete/{phoneNo}")
     public ResponseEntity deleteUser(@PathVariable("phoneNo") Long phoneNo, @RequestBody User user) {
         if (userRepo.existsByPhoneNo(user.getPhoneNo())) {
-            userRepo.deleteById(phoneNo);
+            userRepo.delete(user);
+            return ResponseEntity.ok(HttpStatus.OK);
         }
         else{
             return new ResponseEntity(new ApiResponse(false, "User is not available!"),
                     HttpStatus.BAD_REQUEST);
         }
-        return ResponseEntity.ok().build();
     }
 
 }

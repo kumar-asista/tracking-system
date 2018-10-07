@@ -5,5 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface RootRepo extends JpaRepository<Root, Integer> {
 
-    boolean existsByRootId(Integer rootid);
+    boolean existsByRootId(Integer rootId);
+
 }
