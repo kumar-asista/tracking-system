@@ -4,22 +4,21 @@ import javax.validation.constraints.*;
 
 public class SignUpRequest {
 
-    @NotBlank
-    @Size(min = 4, max =29)
-    private String username;
-    @Size(min = 4,max = 30)
-    private String firstname;
-    @Size(min = 4,max = 30)
-    private String lastname;
     private Long phoneNo;
-    private Boolean enable;
+    private String firstname;
+    private String lastname;
+    private Boolean isEnable;
     private Long roleId;
-    public String getUsername() {
-        return username;
+
+    public SignUpRequest() {
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public SignUpRequest(Long phoneNo, String firstname, String lastname, Boolean isEnable, Long roleId) {
+        this.phoneNo = phoneNo;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.isEnable = isEnable;
+        this.roleId = roleId;
     }
 
     public Long getPhoneNo() {
@@ -47,14 +46,18 @@ public class SignUpRequest {
     }
 
     public Boolean getEnable() {
-        return enable;
+        return isEnable;
     }
 
     public void setEnable(Boolean enable) {
-        this.enable = enable;
+        isEnable = enable;
     }
 
-    public Long getRoleId() { return roleId; }
+    public Long getRoleId() {
+        return roleId;
+    }
 
-    public void setRoleId(Long roleId) { this.roleId = roleId; }
+    public void setRoleId(Long roleId) {
+        this.roleId = roleId;
+    }
 }

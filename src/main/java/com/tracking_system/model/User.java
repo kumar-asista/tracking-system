@@ -12,37 +12,30 @@ public class User {
 
 
     @Id
-    @Column(name = "username")
-    private String username;
+    @Column(name = "phone_no")
+    private Long phoneNo;
     @Column(name = "first_name")
     private String firstname;
     @Column(name = "last_name")
     private String lastname;
-    @Column(name = "phone_no")
-    private Long phoneNo;
-    @Column(name = "isenable")
+    @Column(name = "is_enable")
     private Boolean isEnable;
-    @Column Long roleId;
+    @Column(name = "role_id")
+    private Long roleId;
 
     public User() {
     }
 
-    public User(String username, String firstname, String lastname, Long phoneNo, Boolean isEnable, Long roleId) {
-        this.username = username;
+    public User(Long phoneNo, String firstname, String lastname, Boolean isEnable, Long roleId) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.phoneNo = phoneNo;
         this.isEnable = isEnable;
         this.roleId = roleId;
     }
-
-
-    @ManyToMany(fetch = FetchType.LAZY,
-                cascade = {CascadeType.MERGE,
-                          CascadeType.PERSIST}
-                )
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinTable(name = "user_institution",
-            joinColumns = {@JoinColumn(name = "username")},
+            joinColumns = {@JoinColumn(name = "phone_no")},
             inverseJoinColumns = {@JoinColumn(name = "institute_id")})
     private Set<Institution> institutions = new HashSet<>();
 
@@ -52,14 +45,6 @@ public class User {
 
     public void setInstitutions(Set<Institution> institutions) {
         this.institutions = institutions;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     public String getFirstname() {

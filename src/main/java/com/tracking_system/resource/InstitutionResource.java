@@ -16,9 +16,6 @@ public class InstitutionResource  {
     @Autowired
     private InstitutionRepo institutionRepo;
 
-    @Autowired
-    private UserRepo userRepo;
-
     @GetMapping(value = "/all")
     public List<Institution> getAll(){
         return institutionRepo.findAll();

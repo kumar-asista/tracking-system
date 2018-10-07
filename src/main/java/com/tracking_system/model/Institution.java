@@ -22,8 +22,7 @@ public class Institution extends Audit{
     @Column(name = "enable")
     private Boolean enableInstitution;
 
-    public Institution() {
-    }
+    public Institution() { }
 
     public Institution(Integer institutionId, String institutionName, String institutionAddress, Boolean enableInstitution) {
         this.institutionId = institutionId;
@@ -31,6 +30,17 @@ public class Institution extends Audit{
         this.institutionAddress = institutionAddress;
         this.enableInstitution = enableInstitution;
 
+    }
+
+    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "institutions")
+    private Set<User> user = new HashSet<>();
+
+    public Set<User> getUser() {
+        return user;
+    }
+
+    public void setUser(Set<User> user) {
+        this.user = user;
     }
 
     public Integer getInstitutionId() {
@@ -65,19 +75,5 @@ public class Institution extends Audit{
         this.enableInstitution = enableInstitution;
     }
 
-    @ManyToMany(fetch = FetchType.LAZY,
-            cascade = {
-                    CascadeType.PERSIST,
-                    CascadeType.MERGE
-            },
-            mappedBy = "institutions")
-    private Set<User> user = new HashSet<>();
 
-    public Set<User> getUser() {
-        return user;
-    }
-
-    public void setUser(Set<User> user) {
-        this.user = user;
-    }
 }

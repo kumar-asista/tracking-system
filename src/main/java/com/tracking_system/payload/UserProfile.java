@@ -3,32 +3,20 @@ package com.tracking_system.payload;
 
 public class UserProfile {
 
-    private String username;
     private Long phoneNo;
-    private Boolean enable;
     private String firstname;
     private String lastname;
+    private Boolean isEnable;
     private Long roleId;
 
-    public UserProfile() {
-    }
+    public UserProfile() { }
 
-    public UserProfile(String username, Long phoneNo, Boolean enable, String firstname, String lastname, Long roleId) {
-        this.username = username;
+    public UserProfile(Long phoneNo, String firstname, String lastname, Boolean isEnable, Long roleId) {
         this.phoneNo = phoneNo;
-        this.enable = enable;
         this.firstname = firstname;
         this.lastname = lastname;
+        this.isEnable = isEnable;
         this.roleId = roleId;
-
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     public Long getPhoneNo() {
@@ -37,14 +25,6 @@ public class UserProfile {
 
     public void setPhoneNo(Long phoneNo) {
         this.phoneNo = phoneNo;
-    }
-
-    public Boolean getEnable() {
-        return enable;
-    }
-
-    public void setEnable(Boolean enable) {
-        this.enable = enable;
     }
 
     public String getFirstname() {
@@ -61,6 +41,14 @@ public class UserProfile {
 
     public void setLastname(String lastname) {
         this.lastname = lastname;
+    }
+
+    public Boolean getEnable() {
+        return isEnable;
+    }
+
+    public void setEnable(Boolean enable) {
+        isEnable = enable;
     }
 
     public Long getRoleId() {
