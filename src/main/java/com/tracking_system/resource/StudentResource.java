@@ -23,14 +23,14 @@ public class StudentResource {
     @Autowired
     private StudentRepo studentRepo;
 
-    @Autowired
-    private StudentService studentService;
+    //    @Autowired
+    //    private StudentService studentService;
 
 
     //Get All By Page
     @GetMapping(value = "/all")
-    public List<Student> getAllStudent(@RequestParam("page") int page) {
-        return studentService.getAllStudent(page);
+    public List<Student> getAllStudent() {
+        return studentRepo.findAll();
     }
 
     //Create Student
@@ -44,30 +44,32 @@ public class StudentResource {
         }
 
         //Creating Student
-        Student student = new Student(studentProfile.getRegisterno(),studentProfile.getFirstname(),
-                                        studentProfile.getLastname(),studentProfile.getClassname(),
-                                        studentProfile.getSec(),studentProfile.getParentname(),
-                                        studentProfile.getPhoneno(),studentProfile.getAddrs(),
-                                        studentProfile.getRootid());
+        Student student = new Student(studentProfile.getStudentId(),studentProfile.getFirstname(),
+                                      studentProfile.getLastname(),studentProfile.getClassname(),
+                                      studentProfile.getSection(),studentProfile.getParentname(),
+                                      studentProfile.getPhoneno(),studentProfile.getAddress(),
+                                      studentProfile.getRootid(),studentProfile.getIsenable(),
+                                      studentProfile.getRegisterno());
 
         Student result = studentRepo.save(student);
 
         URI location = ServletUriComponentsBuilder
-                .fromCurrentContextPath().path("/{firstname}")
+                .fromCurrentContextPath().path("/{registerno}")
                 .buildAndExpand(result.getFirstname()).toUri();
 
         return ResponseEntity.created(location).body(new ApiResponse(true, "Student registered successfully"));
     }
 
-    //List StudentByFirstName
-    @GetMapping("/{firstname}")//working
-    public StudentProfile getStudentProfile(@PathVariable(value = "firstname") String firstname) {
-        Student student = studentRepo.findByFirstname(firstname)
-                .orElseThrow(() -> new ResourceNotFoundException("Student", "firstname", firstname));
+    //List StudentByRegisterNo
+    @GetMapping("/{registerno}")//working
+    public StudentProfile getStudentProfile(@PathVariable(value = "registerno") String registerno) {
+        Student student = studentRepo.findByRegisterno(registerno)
+                .orElseThrow(() -> new ResourceNotFoundException("Student", "register", registerno));
 
-        StudentProfile studentProfile = new StudentProfile(student.getRegisterno(),student.getFirstname(),student.getLastname(),
-                                                           student.getClassname(),student.getSec(),student.getParentname(),
-                                                           student.getPhoneno(),student.getAddrs(),student.getRootid());
+        StudentProfile studentProfile = new StudentProfile(student.getStudentId(),student.getFirstname(),student.getLastname(),
+                                                           student.getClassname(),student.getSection(),student.getParentname(),
+                                                           student.getPhoneno(),student.getAddress(),student.getRootid(),
+                                                           student.getIsenable(),student.getRegisterno());
 
         return studentProfile;
     }
@@ -75,16 +77,24 @@ public class StudentResource {
 
     //Updating Student
     @PutMapping(value = "/update/{registerno}")
-    public Student updateByRegisterNo(@PathVariable (value = "registerno") Integer registerno, @RequestBody Student student){
-        studentRepo.findById(registerno);
+    public Student updateStudent(@PathVariable(value = "registerno") String registerno, @RequestBody Student student){
+        studentRepo.findByRegisterno(registerno);
         return studentRepo.save(student);
+
     }
 
     //Deleting Student
     @DeleteMapping(value = "/delete/{registerno}")
-    public ResponseEntity deleteByStudent(@PathVariable("registerno") Integer registerno, @RequestBody Student student) {
-        studentRepo.delete(student);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity deleteByStudent(@PathVariable("registerno") String registerno, @RequestBody Student student) {
+        if (studentRepo.existsByRegisterno(student.getRegisterno())) {
+            studentRepo.findByRegisterno(registerno);
+            studentRepo.delete(student);
+            return ResponseEntity.ok(HttpStatus.OK);
+        }
+        else{
+            return new ResponseEntity(new ApiResponse(false, "Student is not available!"),
+                    HttpStatus.BAD_REQUEST);
+        }
     }
 
 }
