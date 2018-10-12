@@ -77,10 +77,15 @@ public class StudentResource {
 
     //Updating Student
     @PutMapping(value = "/update/{registerno}")
-    public Student updateStudent(@PathVariable(value = "registerno") String registerno, @RequestBody Student student){
-        studentRepo.findByRegisterno(registerno);
-        return studentRepo.save(student);
-
+    public ResponseEntity updateStudent(@PathVariable(value = "registerno") String registerno, @RequestBody Student student){
+        if (studentRepo.existsByRegisterno(student.getRegisterno())) {
+            studentRepo.findByRegisterno(registerno);
+            studentRepo.save(student);
+            return ResponseEntity.ok(HttpStatus.OK);
+        } else {
+            return new ResponseEntity(new ApiResponse(false, "Student is not available!"),
+                    HttpStatus.BAD_REQUEST);
+        }
     }
 
     //Deleting Student
