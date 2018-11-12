@@ -19,18 +19,20 @@ public class Locations extends Audit{
     private Integer rootid;
 
 
-    /*@ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "root_id", referencedColumnName = "root_id", insertable = false, updatable = false)
     private Root root;
+
     public Root getRoot() {
         return root;
     }
     public void setRoot(Root root) {
         this.root = root;
-    }*/
+    }
 
     public Locations() {
     }
+
     public Locations(Integer locationid, Double latitude, Double longitude, Integer rootid) {
         this.locationid = locationid;
         this.latitude = latitude;

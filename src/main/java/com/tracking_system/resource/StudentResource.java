@@ -23,15 +23,15 @@ public class StudentResource {
     @Autowired
     private StudentRepo studentRepo;
 
-    //    @Autowired
-    //    private StudentService studentService;
-
+    @Autowired
+    private StudentService studentService;
 
     //Get All By Page
     @GetMapping(value = "/all")
-    public List<Student> getAllStudent() {
-        return studentRepo.findAll();
+    public List<Student> getAllStudent(@RequestParam("page") int page, @RequestParam("limit") int limit ) {
+        return studentService.getAllStudent(page, limit);
     }
+
 
     //Create Student
     @PostMapping(value = "/create")

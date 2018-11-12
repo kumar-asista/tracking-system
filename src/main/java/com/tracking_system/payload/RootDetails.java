@@ -14,7 +14,7 @@ public class RootDetails {
     public RootDetails() {
     }
 
-    public RootDetails(Integer rootId, String rootFrom, String rootTo, Integer rootinstitutionId,  Integer busno, String driverLicenseNo, String driverName, Long driverPhoneNo) {
+    public RootDetails(Integer rootId, String rootFrom, String rootTo, Integer rootinstitutionId, Integer busno, String driverLicenseNo, String driverName, Long driverPhoneNo) {
         this.rootId = rootId;
         this.rootFrom = rootFrom;
         this.rootTo = rootTo;

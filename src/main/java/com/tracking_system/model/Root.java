@@ -29,18 +29,16 @@ public class Root extends Audit{
     @JoinColumn(name = "institution_id", referencedColumnName = "institution_id", insertable = false, updatable = false)
     private Institution institution;
 
-
     public Institution getInstitution() {
         return institution;
     }
-
     public void setInstitution(Institution institution) {
         this.institution = institution;
     }
 
     public Root() {}
 
-    public Root(Integer rootId, String rootFrom, String rootTo, Integer rootinstitutionId , Integer busno, String driverLicenseNo, String driverName, Long driverPhoneNo) {
+    public Root(Integer rootId, String rootFrom, String rootTo, Integer rootinstitutionId, Integer busno, String driverLicenseNo, String driverName, Long driverPhoneNo) {
         this.rootId = rootId;
         this.rootFrom = rootFrom;
         this.rootTo = rootTo;
@@ -82,6 +80,8 @@ public class Root extends Audit{
     public void setRootinstitutionId(Integer rootinstitutionId) {
         this.rootinstitutionId = rootinstitutionId;
     }
+
+
 
     public Integer getBusno() {
         return busno;

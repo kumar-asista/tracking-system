@@ -15,17 +15,18 @@ import java.util.List;
 
 @Service
 public class StudentService {
-    @Value("3")
-    private int limit;
 
     @Autowired
     private StudentRepo studentRepo;
 
 
-    public List<Student> getAllStudent(int page) {
+    public List<Student> getAllStudent(int page, int limit) {
         List<Student> studentList = new ArrayList<Student>();
         if (page <= 0) {
             page = 1;
+        }
+        if (limit <= 5) {
+            limit = 5;
         }
         Pageable pageRequest = new PageRequest(--page, limit, Sort.Direction.ASC,"registerno");
         Page<Student> pageStudent = studentRepo.findAll(pageRequest);

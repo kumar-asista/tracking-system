@@ -8,7 +8,6 @@ import com.tracking_system.repository.RootRepo;
 import com.tracking_system.service.RootService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -24,10 +23,13 @@ public class RootResource{
     @Autowired
     private RootRepo rootRepo;
 
-    //Get All Roots By Page
+    @Autowired
+    private RootService rootService;
+
+    //Get All Roots
     @GetMapping("/all")
-    public List<Root> getAllRoot() {
-        return rootRepo.findAll();
+    public List<Root> getAllRoot(@RequestParam ("page") int page, @RequestParam ("limit") int limit) {
+        return rootService.getAllRoot(page,limit);
     }
 
     //Creating Roots
@@ -40,9 +42,11 @@ public class RootResource{
                     HttpStatus.BAD_REQUEST);
         }
 
-        Root root = new Root(rootDetails.getRootId(),rootDetails.getRootFrom(),rootDetails.getRootTo(),rootDetails.getRootinstitutionId(),
-                             /*rootDetails.getFromLatitude(),rootDetails.getFromLongitude(),rootDetails.getToLatiutde(),rootDetails.getToLongitude(),*/
-                             rootDetails.getBusno(),rootDetails.getDriverLicenseNo(),rootDetails.getDriverName(),rootDetails.getDriverPhoneNo());
+        Root root = new Root(rootDetails.getRootId(),rootDetails.getRootFrom(),
+                             rootDetails.getRootTo(),rootDetails.getRootinstitutionId(),
+                             rootDetails.getBusno(),rootDetails.getDriverLicenseNo(),
+                             rootDetails.getDriverName(),rootDetails.getDriverPhoneNo());
+
         Root result = rootRepo.save(root);
 
         URI location = ServletUriComponentsBuilder

@@ -24,14 +24,17 @@ public class Student {
     private Long phoneno;
     @Column(name = "address")
     private String address;
+
     @Column(name = "root_id")
     private Integer rootid;
+
     @Column(name = "is_enable")
     private Boolean isenable;
+
     @Column(name = "register_no")
     private String registerno;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "root_id" ,referencedColumnName = "root_id", insertable = false, updatable = false)
     private Root root;
 

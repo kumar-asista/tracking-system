@@ -16,16 +16,16 @@ import java.util.List;
 @Service
 public class RootService {
 
-    @Value("2")
-    private int limit;
-
     @Autowired
     private RootRepo rootRepo;
 
-    public List<Root> getAllRoot(int page) {
+    public List<Root> getAllRoot(int page,int limit) {
         List<Root> rootList = new ArrayList<Root>();
         if (page <= 0) {
             page = 1;
+        }
+        if (limit <= 0){
+            limit = 5;
         }
         Pageable pageRequest = new PageRequest(--page, limit, Sort.Direction.ASC,"rootId");
         Page<Root> pageRoot = rootRepo.findAll(pageRequest);

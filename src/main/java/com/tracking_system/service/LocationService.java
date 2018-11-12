@@ -18,16 +18,17 @@ import java.util.List;
 @Service
 public class LocationService {
 
-    @Value("2")
-    private int limit;
 
     @Autowired
     private LocationsRepo locationsRepo;
 
-    public List<Locations> getAllLocations(int page) {
+    public List<Locations> getAllLocations(int page, int limit) {
         List<Locations> locationsList = new ArrayList<Locations>();
         if (page <= 0) {
             page = 1;
+        }
+        if (limit <= 0) {
+            limit = 5;
         }
         Pageable pageRequest = new PageRequest(--page, limit, Sort.Direction.ASC,"locId");
         Page<Locations> pageLocations = locationsRepo.findAll(pageRequest);

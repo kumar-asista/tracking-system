@@ -28,18 +28,18 @@ public class LocationResource {
 
     //Get All Location By Page
     @GetMapping("/all")
-    public List<Locations> getAllLocations(@RequestParam("page") int page) {
-        return locationService.getAllLocations(page);
+    public List<Locations> getAllLocations(@RequestParam("page") int page, @RequestParam ("limit") int limit) {
+        return locationService.getAllLocations(page, limit);
     }
 
     //Creating Location
-    @PostMapping(value = "/createLocation")
-    public ResponseEntity createLocation(@Valid @RequestBody final LocationDetails locationDetails){
+    @PostMapping(value = "/create")
+    public ResponseEntity createLocation(@Valid @RequestBody final LocationDetails locationDetails) {
 
-        Locations locations = new Locations(locationDetails.getLocId(),locationDetails.getLatitude(),locationDetails.getLongitude(),
-                                            locationDetails.getRootid());
-        Locations result = locationsRepo.save(locations);
+        Locations locations = new Locations(locationDetails.getLocationid(), locationDetails.getLatitude(),
+                locationDetails.getLongitude(), locationDetails.getRootid());
+        locationsRepo.save(locations);
 
-        return ResponseEntity.ok().body(new ApiResponse(true, " successfully"));
+        return ResponseEntity.ok(locations);
     }
 }

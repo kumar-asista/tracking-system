@@ -2,43 +2,43 @@ package com.tracking_system.payload;
 
 public class LocationDetails {
 
-    private Integer locId;
-    private Double Latitude;
-    private Double Longitude;
+    private Integer locationid;
+    private Double latitude;
+    private Double longitude;
     private Integer rootid;
 
     public LocationDetails() {
     }
 
-    public LocationDetails(Integer locId, Double latitude, Double longitude, Integer rootid) {
-        this.locId = locId;
-        this.Latitude = latitude;
-        this.Longitude = longitude;
+    public LocationDetails(Integer locationid, Double latitude, Double longitude, Integer rootid) {
+        this.locationid = locationid;
+        this.latitude = latitude;
+        this.longitude = longitude;
         this.rootid = rootid;
     }
 
-    public Integer getLocId() {
-        return locId;
+    public Integer getLocationid() {
+        return locationid;
     }
 
-    public void setLocId(Integer locId) {
-        this.locId = locId;
+    public void setLocationid(Integer locationid) {
+        this.locationid = locationid;
     }
 
     public Double getLatitude() {
-        return Latitude;
+        return latitude;
     }
 
     public void setLatitude(Double latitude) {
-        Latitude = latitude;
+        this.latitude = latitude;
     }
 
     public Double getLongitude() {
-        return Longitude;
+        return longitude;
     }
 
     public void setLongitude(Double longitude) {
-        Longitude = longitude;
+        this.longitude = longitude;
     }
 
     public Integer getRootid() {
