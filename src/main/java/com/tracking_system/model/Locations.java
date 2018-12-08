@@ -1,7 +1,7 @@
 package com.tracking_system.model;
 
 import javax.persistence.*;
-import java.io.Serializable;
+
 
 @Entity
 @Table(name = "locations")

@@ -42,4 +42,10 @@ public class LocationResource {
 
         return ResponseEntity.ok(locations);
     }
+
+    @GetMapping("/findLocationByRootId")
+    public Locations recentLocationByRootId(@RequestParam("rootid") int rootid){
+
+       return locationService.findLocationByRoot(rootid);
+    }
 }

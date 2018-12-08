@@ -30,11 +30,17 @@ public class LocationService {
         if (limit <= 0) {
             limit = 5;
         }
-        Pageable pageRequest = new PageRequest(--page, limit, Sort.Direction.ASC,"locId");
+        Pageable pageRequest = new PageRequest(--page, limit );//;Sort.Direction.ASC,"loc_id");
         Page<Locations> pageLocations = locationsRepo.findAll(pageRequest);
         for (Locations locations : pageLocations) {
             locationsList.add(locations);
         }
         return locationsList;
     }
+
+    public Locations findLocationByRoot(int rootid){
+        Locations locations = locationsRepo.findLocationByRoot(rootid);
+        return locations;
+    }
+
 }
